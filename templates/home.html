@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+.container {
+    text-align: center;
+    
+}
+
+button {
+    padding: 15px 25px;
+    margin: 10px;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #38bdf8;
+}
+
+button:hover {
+    background: #8b5cf6;
+    color: white;
+}
+</style>
+
+<header class="main-header">
+    <h1>Welcome To Vocalize</h1>
+</header>
+
+<div class="container">
+    <p>Give your words a voice & Turn voice into meaning.</p>
+
+    
+</div>
+<div class="container">
+    <div class="btn-group">
+        
+    
+        <a href="/login"><button>Login</button></a>
+        <a href="/register"><button>Register</button></a>
+        <br>
+        <a href="/tts"><button>Text - Speech</button></a>
+        <a href="/stt"><button>Speech - Text</button></a>
+        
+     
+</div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+body {
+    background: linear-gradient(135deg, #0f172a, #1e3a8a, #8b5cf6);
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+.register-container {
+    width: 300px;
+    margin: 100px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background: #38bdf8;
+    border: none;
+    color: black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #8b5cf6;
+    color: white;
+}
+</style>
+
+<div class="register-container">
+
+    <h2>Create Account</h2>
+
+    <form method="POST" action="/register">
+
+        <input type="text"
+               name="username"
+               placeholder="Enter Username"
+               required>
+
+        <input type="email"
+               name="email"
+               placeholder="Enter Email"
+               required>
+
+        <input type="password"
+               name="password"
+               placeholder="Enter Password"
+               required>
+
+        <button type="submit">
+            Register
+        </button>
+
+    </form>
+
+    <p>
+        Already have an account?
+        <a href="/login" style="color:#38bdf8;">
+            Login
+        </a>
+    </p>
+
+</div>
+
+{% endblock %}

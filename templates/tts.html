@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="login-container">
+
+    <h2>Text To Speech Converter</h2>
+
+    <form method="POST" id="ttsForm">
+
+        <textarea
+            name="text"
+            id="text"
+            rows="6"
+            placeholder="Enter text here..."
+            style="width:90%; padding:10px; border-radius:10px;">
+        </textarea>
+
+        <br><br>
+
+        <button type="submit">
+            Convert
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+
+document.getElementById("ttsForm").addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    let text = document.getElementById("text").value;
+
+    let speech = new SpeechSynthesisUtterance(text);
+
+    speech.lang = "en-US";
+
+    speech.rate = 1;
+
+    speech.pitch = 1;
+
+    speech.volume = 1;
+
+    speechSynthesis.speak(speech);
+
+    fetch("/tts", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+
+        body: "text=" + encodeURIComponent(text)
+
+    });
+
+});
+
+</script>
+
+{% endblock %}
+

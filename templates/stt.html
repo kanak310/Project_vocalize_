@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="login-container">
+
+    <h2>Speech To Text Converter</h2>
+
+    <textarea
+        id="output"
+        rows="6"
+        placeholder="Your speech will appear here..."
+        style="width:90%; padding:10px; border-radius:10px;">
+    </textarea>
+
+    <br><br>
+
+    <button onclick="startSpeech()">
+        Start Speaking
+    </button>
+
+</div>
+
+
+<script>
+
+function startSpeech() {
+
+    const SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const recognition = new SpeechRecognition();
+
+    recognition.lang = "en-US";
+
+    recognition.continuous = false;
+
+    recognition.interimResults = false;
+
+    recognition.maxAlternatives = 1;
+
+    recognition.start();
+
+    recognition.onresult = function(event) {
+
+        const text = event.results[0][0].transcript;
+
+        document.getElementById("output").value = text;
+
+        fetch("/stt", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+
+            body: "text=" + encodeURIComponent(text)
+        });
+
+    };
+
+    recognition.onerror = function(event) {
+
+        alert(event.error);
+    };
+}
+
+</script>   
+
+    
+  
+
+{% endblock %}
