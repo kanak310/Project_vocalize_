@@ -1,10 +1,12 @@
 import datetime
 
-from flask import Flask , render_template , request , url_for , redirect
+from flask import Flask , render_template , request , url_for , redirect , session
 
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+
+app.secret_key = "vocalize_secret_key"
 
 app.config['SQLALCHEMY_DATABASE_URI'] ='sqlite:///users.db'
 
@@ -23,9 +25,14 @@ class History(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    text = db.Column(db.Text, nullable=False)
+    text = db.Column(db.Text)
 
     history_type = db.Column(db.String(20))
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('user.id')
+    )
 
 @app.route('/')
 def home():
@@ -65,8 +72,10 @@ def login():
         ).first()
 
         if user:
-            return redirect(url_for('home'))
+            session['user_id'] = user.id
 
+            return redirect(url_for('home'))
+        
         else:
             return "Invalid Email or Password"
 
@@ -82,13 +91,11 @@ def tts():
         print("TEXT RECEIVED:", text)
 
         try:
-
             new_history = History(
-
-                text=text,
-
-                history_type="TTS"
-            )
+            text=text,
+            history_type="TTS",
+            user_id=session['user_id']
+)
 
             db.session.add(new_history)
 
@@ -110,11 +117,10 @@ def stt():
         text = request.form.get('text')
 
         new_history = History(
-
-            text=text,
-
-            history_type="STT"
-        )
+        text=text,
+        history_type="STT",
+        user_id=session['user_id']
+)
 
         db.session.add(new_history)
 
@@ -127,7 +133,10 @@ def stt():
 @app.route('/history')
 def history_page():
 
-    all_items = History.query.all()
+    all_items = History.query.filter_by(
+    user_id=session['user_id']
+).all()
+
 
     print(all_items)
 
