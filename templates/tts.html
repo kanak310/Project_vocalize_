@@ -15,8 +15,25 @@
             placeholder="Enter text here..."
             style="width:90%; padding:10px; border-radius:10px;">
         </textarea>
-
         <br><br>
+
+    <label>Select Voice:</label>
+
+    <audio controls>
+    <source src="/static/audio/output.mp3">
+</audio>
+
+<select id="voice">
+
+    <option value="david">
+        Male Voice
+    </option>
+
+    <option value="zira">
+        Female Voice
+    </option>
+
+</select>
 
         <button type="submit">
             Convert
@@ -26,6 +43,10 @@
 
 </div>
 
+<a href="/static/audio/output.mp3" download>
+    Download Audio
+</a>
+
 <script>
 
 document.getElementById("ttsForm").addEventListener("submit", function(event) {
@@ -34,7 +55,27 @@ document.getElementById("ttsForm").addEventListener("submit", function(event) {
 
     let text = document.getElementById("text").value;
 
+    let selectedVoice = document.getElementById("voice").value;
+
+
     let speech = new SpeechSynthesisUtterance(text);
+
+    let voices =
+    speechSynthesis.getVoices();
+
+if (selectedVoice === "david") {
+
+    speech.voice =
+        voices.find(v =>
+            v.name.includes("David"));
+
+}
+else if (selectedVoice === "zira") {
+
+    speech.voice =
+        voices.find(v =>
+            v.name.includes("Zira"));
+}
 
     speech.lang = "en-US";
 
