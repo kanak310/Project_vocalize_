@@ -9,7 +9,6 @@ Project Vocalize is a Flask-based web application that provides Speech-to-Text a
 * User-friendly web interface
 
 ## Technologies Used
-
 * Python
 * Flask
 * HTML
