@@ -4,14 +4,6 @@ from flask import Flask , render_template , request , url_for , redirect , sessi
 
 from flask_sqlalchemy import SQLAlchemy
 
-from gtts import gTTS
-
-text = "Hello, welcome to Vocalize! This is a text-to-speech conversion."
-
-tts = gTTS(text=text)
-
-tts.save("static/audio/output.mp3")
-
 app = Flask(__name__)
 
 app.secret_key = "vocalize_secret_key"
