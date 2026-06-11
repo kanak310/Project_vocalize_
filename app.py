@@ -133,17 +133,18 @@ def stt():
 @app.route('/history')
 def history_page():
 
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
     all_items = History.query.filter_by(
-    user_id=session['user_id']
-).all()
-
-
-    print(all_items)
+        user_id=session['user_id']
+    ).all()
 
     return render_template(
         'history.html',
         items=all_items
     )
+
 
 @app.route('/clear_history')
 def clear_history():
